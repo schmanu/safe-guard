@@ -155,7 +155,7 @@ contract SafeGuard is IModuleGuard, ITransactionGuard {
         bytes calldata data,
         uint8 operation,
         address module
-    ) external returns (bytes32) {
+    ) external view returns (bytes32) {
         _checkTransaction(msg.sender, to, data, value, operation);
         if (!modules[msg.sender][module]) {
             revert UnauthorizedModule(msg.sender, module);
@@ -179,7 +179,7 @@ contract SafeGuard is IModuleGuard, ITransactionGuard {
         address payable,
         bytes calldata,
         address
-    ) external {
+    ) external view {
         _checkTransaction(msg.sender, to, data, value, operation);
     }
 
@@ -236,7 +236,7 @@ contract SafeGuard is IModuleGuard, ITransactionGuard {
         bytes calldata data,
         uint256 value,
         uint8 operation
-    ) internal {
+    ) internal view {
         Account storage account = accounts[safe];
         if (account.initialized) {
             // Check delegate calls
@@ -306,7 +306,10 @@ contract SafeGuard is IModuleGuard, ITransactionGuard {
         return selector == MULTISEND_SELECTOR;
     }
 
-    function _checkMultiSend(address safe, bytes calldata transactions) public {
+    function _checkMultiSend(
+        address safe,
+        bytes calldata transactions
+    ) public view {
         // Iterate over transactions
         uint256 length = transactions.length;
         uint256 i = 0;

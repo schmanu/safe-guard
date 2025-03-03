@@ -11,7 +11,7 @@ contract MockStorage is ISafe {
         0x4a204f620c8c5ccdca3fd54d003badd85ba500436a431f0cbda4f558c93c34c8;
     function getStorageAt(
         uint256 offset,
-        uint256 length
+        uint256
     ) external view returns (bytes memory) {
         if (offset == TRANSACTION_GUARD_STORAGE_SLOT) {
             return abi.encode(msg.sender);
